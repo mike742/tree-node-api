@@ -1,1 +1,1 @@
-app: gunicorn app:get_tree
+web: gunicorn app:app
