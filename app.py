@@ -5,7 +5,7 @@ import csv
 import json
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, app, resources={r"/nodes/*": {"origins": "*"}})
 app.config['MONGO_DBNAME'] = 'test'
 app.config['MONGO_URI'] = 'mongodb+srv://adcore:adcore@cluster0.agwmf.mongodb.net/test?retryWrites=true&w=majority'
 
