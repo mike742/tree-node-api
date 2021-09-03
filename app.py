@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_file
 from flask_pymongo import PyMongo
 from flask_cors import CORS
 import csv
@@ -11,6 +11,14 @@ app.config['MONGO_URI'] = 'mongodb+srv://adcore:adcore@cluster0.agwmf.mongodb.ne
 
 
 mongo = PyMongo(app)
+
+
+@app.route('/nodes/exportCsv', methods=['GET'])
+def export_csv():
+    try:
+        return send_file(csvFilePath, mimetype='csv', as_attachment=True)
+    except FileNotFoundError:
+        return "File not found"
 
 
 @app.route('/nodes', methods=['GET'])
