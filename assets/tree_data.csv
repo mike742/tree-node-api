@@ -1,0 +1,38 @@
+id	name	description	parent	read_only
+1	Node	node description	0	1
+2	Node 1	node description 1	0	0
+3	Node 2	node description 2	0	1
+4	Node 4	node description 4	1	0
+5	Node 5	node description 5	2	0
+6	Node 1	node description 1	3	0
+7	Node 2	node description 2	2	0
+8	Node 3	node description 3	3	0
+9	Node 4	node description 4	1	0
+10	Node 5	node description 5	5	0
+11	Node 6	node description 6	6	0
+12	Node 7	node description 7	7	0
+13	Node 8	node description 8	1	0
+14	Node 9	node description 9	2	0
+15	Node 10	node description 10	3	0
+16	Node 11	node description 11	5	0
+17	Node 12	node description 12	6	0
+18	Node 13	node description 13	7	0
+19	Node 14	node description 14	1	1
+20	Node 15	node description 15	2	0
+21	Node 16	node description 16	3	0
+22	Node 17	node description 17	4	0
+23	Node 18	node description 18	5	1
+24	Node 19	node description 19	6	0
+25	Node 20	node description 20	7	0
+26	Node 21	node description 21	20	1
+27	Node 22	node description 22	21	0
+28	Node 23	node description 23	27	0
+29	Node 24	node description 24	27	1
+30	Node 25	node description 25	1	0
+
+
+
+
+
+
+
