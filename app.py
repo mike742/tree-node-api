@@ -47,9 +47,10 @@ def create_node():
     content = request.get_json(force=True)
     parent = content["parent"]
     node = content["node"]
+    id = nodes.find().sort('_id', pymongo.DESCENDING).limit(1)[0]['_id'] + 1
 
     new_id = nodes.insert(
-        {"_id": int(node["id"]), "name": node["name"], "description": node["description"],
+        {"_id": id, "name": node["name"], "description": node["description"],
          "read_only": int(node["read_only"]), "parent": int(parent)})
 
     return str(new_id)
