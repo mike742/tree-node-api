@@ -4,6 +4,8 @@ from flask_cors import CORS
 import csv
 import json
 
+import pymongo
+
 app = Flask(__name__)
 CORS(app, resources={r"/nodes/*": {"origins": "*"}})
 app.config['MONGO_DBNAME'] = 'test'
@@ -11,14 +13,6 @@ app.config['MONGO_URI'] = 'mongodb+srv://adcore:adcore@cluster0.agwmf.mongodb.ne
 
 
 mongo = PyMongo(app)
-
-
-@app.route('/nodes/exportCsv', methods=['GET'])
-def export_csv():
-    try:
-        return send_file(csvFilePath, mimetype='csv', as_attachment=True)
-    except FileNotFoundError:
-        return "File not found"
 
 
 @app.route('/nodes', methods=['GET'])
@@ -86,19 +80,6 @@ def delete_node(id):
         return "Something wrong"
 
 
-"""
-{
-    "parent": 2,
-    "node": {
-        "id": 1,
-        "name": "test",	
-        "description": "test desc",	
-        "read_only": 0
-    }
-}
-"""
-
-
 def make_json(csvFilePath, jsonFilePath):
 
     data = []
@@ -111,6 +92,27 @@ def make_json(csvFilePath, jsonFilePath):
 
     with open(jsonFilePath, 'w', encoding='utf-8') as jsonf:
         jsonf.write(json.dumps(data))
+
+
+@app.route('/nodes/exportCsv', methods=['GET'])
+def export_csv():
+    csvFilePath = "tree_nodes.csv"
+    nodes = mongo.db.tree_node.find({}).sort('_id', pymongo.ASCENDING)
+
+    with open(csvFilePath, 'w', encoding='UTF8', newline='') as f:
+
+        fieldnames = ['id', 'name', 'description', 'parent', 'read_only']
+
+        writer = csv.DictWriter(f, fieldnames=fieldnames, delimiter="\t")
+        writer.writeheader()
+
+        for row in nodes:
+            writer.writerow({"id": row["_id"], "name": row["name"], "description": row["description"],
+                             "read_only": row["read_only"], "parent": row["parent"]})
+    try:
+        return send_file(csvFilePath, mimetype='csv', as_attachment=True)
+    except FileNotFoundError:
+        return "Something wrong"
 
 
 csvFilePath = r'assets/tree_data.csv'
